@@ -13,7 +13,7 @@ jobs:
     if: startsWith(github.repository, 'daniel0611') # don't run in forks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: J0B10/aoc-badges-action@v3
         with:
           userid: 662534

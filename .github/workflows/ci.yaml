@@ -20,10 +20,6 @@ jobs:
         dir: ${{fromJson(needs.crates.outputs.dir)}}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        name: Install Toolchain
-        with:
-          toolchain: stable
 
       - name: Cache Cargo crates.io index
         uses: actions/cache@v3
@@ -31,30 +27,17 @@ jobs:
           path: ~/.cargo/registry/index
           key: cargo-crates.io-index
 
-      - uses: actions-rs/cargo@v1
-        name: Check
-        with:
-          command: check
-          args: -p ${{ matrix.dir }}
+      - name: Check
+        run: cargo check -p ${{ matrix.dir }}
 
-      - uses: actions-rs/cargo@v1
-        name: Test
-        with:
-          command: test
-          args: -p ${{ matrix.dir }}
+      - name: Test
+        run: cargo test -p ${{ matrix.dir }}
 
-      - uses: actions-rs/cargo@v1
-        name: Clippy
-        with:
-          command: clippy
-          args: -p ${{ matrix.dir }} -- -D warnings
+      - name: Clippy
+        run: cargo clippy -p ${{ matrix.dir }} -- -D warnings
 
-      - uses: actions-rs/cargo@v1
-        name: Run
+      - name: Run
         # Only run actual solutions and not utlities like add-day
         if: startsWith(matrix.dir, 'day')
-        with:
-          command: run
-          args: -p ${{ matrix.dir }} --release
-
+        run: cargo run -p ${{ matrix.dir }} --release
       

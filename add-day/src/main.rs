@@ -3,10 +3,18 @@ use std::io::{self, Write};
 use std::path::Path;
 use std::path::PathBuf;
 
+use dotenvy::dotenv;
+
+const AOC_YEAR: &str = "2022";
+
 // This is a utility that asks the user for a input number
-// and then creates a new crate for the advent of code challange of that day.
+// and then creates a new crate for the advent of code challenge of that day.
+// Additionally it will download the puzzle input for that day and store it in the
+// newly created crate, if the session cookie is provided in the AOC_SESSION env variable or in the .env file.
 
 fn main() {
+    dotenv().ok();
+
     let day = get_day();
     let day_dir = create_day_dir(day);
     create_cargo_toml(day, &day_dir);
@@ -104,5 +112,33 @@ mod tests {{
 fn create_input_file(day: u8, day_dir: &Path) {
     let name = format!("input_day{:02}.txt", day);
     let input_file_path = day_dir.join(name);
-    fs::File::create(input_file_path).expect("Could not create input file");
+    let mut file = fs::File::create(input_file_path).expect("Could not create input file");
+    
+    let input_content = fetch_input(day);
+    let input_content = input_content.as_bytes();
+    file.write_all(input_content).expect("Could not write input file");
 }
+
+fn fetch_input(day: u8) -> String {
+    let session = std::env::var("AOC_SESSION").ok();
+    if session.is_none() {
+        println!("No AOC_SESSION environment variable found. Puzzle input will not be automatically fetched. Refer to .env.sample");
+        return String::new();
+    }
+    let session = session.unwrap();
+
+    let url = format!("https://adventofcode.com/{AOC_YEAR}/day/{day}/input");
+    println!("Fetching input from {}...", url);
+    let response = ureq::get(&url)
+        .set("Cookie", &format!("session={}", session))
+        .call()
+        .expect("Could not fetch input");
+
+    if response.status() != 200 {
+        panic!("Could not fetch input");
+    }
+
+    println!("Input fetched successfully!");
+    response.into_string().expect("Could not parse input")
+}
+

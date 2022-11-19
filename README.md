@@ -1,7 +1,7 @@
 # Advent of Code 2022
 [![Language](https://img.shields.io/badge/Language-rust-red)](https://rust-lang.org/)
-[![Days completed](https://img.shields.io/badge/day%20📅-25-blue)](https://adventofcode.com/2022)
-[![Stars](https://img.shields.io/badge/stars%20⭐-50-yellow)](https://adventofcode.com/2022/stats)
+[![Days completed](https://img.shields.io/badge/day%20📅-0-blue)](https://adventofcode.com/2022)
+[![Stars](https://img.shields.io/badge/stars%20⭐-0-yellow)](https://adventofcode.com/2022/stats)
 
 This repository contains my solutions for the [Advent Of Code](https://adventofcode.com/) 2022 challenges.
 For more information visit: https://adventofcode.com/2022/about

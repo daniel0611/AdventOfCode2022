@@ -32,11 +32,11 @@ impl Directory {
 
     fn get_size(&self) -> u32 {
         let mut size = 0;
-        for (_, file_size) in &self.files {
+        for file_size in self.files.values() {
             size += file_size;
         }
 
-        for (_, dir) in &self.sub_directories {
+        for dir in self.sub_directories.values() {
             size += dir.get_size();
         }
 
@@ -80,7 +80,7 @@ fn parse_input(input: &PuzzleInput) -> Directory {
 
                     cwd.push(dir_name);
                 }
-            },
+            }
             "ls" => {
                 let mut parent = &mut root_dir;
                 for dir_name in &cwd {
@@ -96,8 +96,7 @@ fn parse_input(input: &PuzzleInput) -> Directory {
                     let name = l.split_whitespace().skip(1).collect::<Vec<_>>().join(" ");
                     parent.add_file(&name, size.unwrap());
                 }
-
-            },
+            }
             _ => panic!("Unknown command: {}", cmd),
         }
     }
@@ -109,23 +108,19 @@ fn get_directory_sizes(dir: &Directory) -> Vec<u32> {
     let mut sizes = vec![];
     sizes.push(dir.get_size());
 
-    for (_, sub_dir) in &dir.sub_directories {
+    for (_, sub_dir) in dir.sub_directories.iter() {
         sizes.extend(get_directory_sizes(sub_dir));
     }
 
     sizes
-
 }
 
 fn solve_a(input: &PuzzleInput) -> u32 {
     let root = parse_input(input);
-    
+
     let dirs = get_directory_sizes(&root);
-    
-    dirs.iter()
-    .filter(|dir| **dir <= 100000)
-    .map(|dir| dir)
-    .sum()
+
+    dirs.iter().filter(|dir| **dir <= 100000).sum()
 }
 
 fn solve_b(input: &PuzzleInput) -> u32 {
@@ -135,7 +130,7 @@ fn solve_b(input: &PuzzleInput) -> u32 {
     let current_size = *dirs.iter().max().unwrap();
     let needed_size = 30000000;
     let size_total = 70000000;
-    
+
     for dir_size in dirs {
         if current_size - dir_size + needed_size <= size_total {
             return dir_size;

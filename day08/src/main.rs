@@ -27,7 +27,7 @@ enum Direction {
     Down,
 }
 
-fn view_distance(tree_map: &Vec<Vec<u8>>, x: usize, y: usize, d: Direction) -> (usize, bool) {
+fn view_distance(tree_map: &[Vec<u8>], x: usize, y: usize, d: Direction) -> (usize, bool) {
     let height = tree_map[y][x];
     let mut trees_in_line: Vec<_> = match d {
         Direction::Left => tree_map[y].iter().take(x).collect(),
@@ -49,7 +49,7 @@ fn view_distance(tree_map: &Vec<Vec<u8>>, x: usize, y: usize, d: Direction) -> (
     (view_distance, can_see_edge)
 }
 
-fn is_visible(tree_map: &Vec<Vec<u8>>, x: usize, y: usize) -> bool {
+fn is_visible(tree_map: &[Vec<u8>], x: usize, y: usize) -> bool {
     let (_, left) = view_distance(tree_map, x, y, Direction::Left);
     let (_, right) = view_distance(tree_map, x, y, Direction::Right);
     let (_, top) = view_distance(tree_map, x, y, Direction::Up);
@@ -73,7 +73,7 @@ fn solve_a(input: &PuzzleInput) -> usize {
     inner_visible + outer_visible
 }
 
-fn calculate_scenic_core(tree_map: &Vec<Vec<u8>>, x: usize, y: usize) -> usize {
+fn calculate_scenic_core(tree_map: &[Vec<u8>], x: usize, y: usize) -> usize {
     let (left_view, _) = view_distance(tree_map, x, y, Direction::Left);
     let (right_view, _) = view_distance(tree_map, x, y, Direction::Right);
     let (top_view, _) = view_distance(tree_map, x, y, Direction::Up);

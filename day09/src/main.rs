@@ -154,7 +154,7 @@ impl GameState {
         self.update_head(direction);
         for knot_index in 0..9 {
             self.update_knot(knot_index);
-            self.visited_knot_positions[knot_index].insert(self.knot_positions[knot_index].clone());
+            self.visited_knot_positions[knot_index].insert(self.knot_positions[knot_index]);
         }
     }
 

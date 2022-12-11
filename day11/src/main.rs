@@ -94,7 +94,7 @@ impl Monkey {
         }
     }
 
-    fn step(&mut self, monkey_list: &mut [Monkey], divide_by_three: bool, common_divisor: u64) {
+    fn step(&mut self, monkey_list: &mut [Monkey], divide_by_three: bool, common_multiple: u64) {
         while !self.item_worry_levels.is_empty() {
             self.item_inspect_count += 1;
 
@@ -107,11 +107,11 @@ impl Monkey {
             if new_worry_level % self.test_divisor == 0 {
                 monkey_list[self.true_target_monkey]
                     .item_worry_levels
-                    .push(new_worry_level % common_divisor);
+                    .push(new_worry_level % common_multiple);
             } else {
                 monkey_list[self.false_target_monkey]
                     .item_worry_levels
-                    .push(new_worry_level % common_divisor);
+                    .push(new_worry_level % common_multiple);
             }
         }
     }
@@ -124,16 +124,12 @@ fn simulate(input:&PuzzleInput, rounds: u64, part_a: bool) -> u64 {
         .map(|lines| Monkey::new(lines.split('\n').map(|s| s.to_string()).collect()))
         .collect();
 
-    let common_divisor = if !part_a {
-        monkeys.iter().map(|m| m.test_divisor).product()
-    } else {
-        u64::MAX
-    };
+    let common_multiple = monkeys.iter().map(|m| m.test_divisor).product();
 
     for _ in 0..rounds {
         for i in 0..monkeys.len() {
             let mut monkey = monkeys[i].clone();
-            monkey.step(&mut monkeys, part_a,  common_divisor);
+            monkey.step(&mut monkeys, part_a,  common_multiple);
             monkeys[i] = monkey;
         }
     }

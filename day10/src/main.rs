@@ -38,7 +38,7 @@ impl Cpu {
     fn new(input: &PuzzleInput) -> Self {
         let instructions = input
             .lines()
-            .map(|line| Instruction::new(line))
+            .map(Instruction::new)
             .collect();
 
         Self {

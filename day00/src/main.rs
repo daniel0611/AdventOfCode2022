@@ -8,11 +8,11 @@ fn main() {
 }
 
 fn solve_a(input: &PuzzleInput) -> usize {
-    input.lines().len()
+    input.lines().count()
 }
 
 fn solve_b(input: &PuzzleInput) -> usize {
-    input.lines().len()
+    input.lines().count()
 }
 
 #[cfg(test)]

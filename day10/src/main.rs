@@ -14,7 +14,7 @@ enum Instruction {
 }
 
 impl Instruction {
-    fn new(val: &str) -> Self {
+    fn new(val: String) -> Self {
         let mut parts = val.split_whitespace();
         let instruction = parts.next().unwrap();
         let value = parts.next().map(|p| p.parse::<i32>().unwrap());
@@ -38,7 +38,6 @@ impl Cpu {
     fn new(input: &PuzzleInput) -> Self {
         let instructions = input
             .lines()
-            .iter()
             .map(|line| Instruction::new(line))
             .collect();
 

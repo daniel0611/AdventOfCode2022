@@ -12,8 +12,7 @@ fn main() {
 
 fn parse_input(input: &PuzzleInput) -> Vec<Vec<u32>> {
     input
-        .lines() // TODO: change lines to be a iter
-        .iter()
+        .lines()
         .map(|line| {
             line.chars()
                 .map(|c| match c {

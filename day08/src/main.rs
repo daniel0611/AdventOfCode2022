@@ -10,7 +10,6 @@ fn main() {
 fn parse_input(input: &PuzzleInput) -> Vec<Vec<u8>> {
     input
         .lines()
-        .iter()
         .map(|line| {
             line.chars()
                 .map(|c| c.to_string().parse().unwrap())

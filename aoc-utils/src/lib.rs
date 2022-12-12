@@ -1,4 +1,5 @@
 use std::fs;
+use std::iter::Map;
 use std::path::Path;
 
 pub struct PuzzleInput {
@@ -38,13 +39,12 @@ impl PuzzleInput {
         }
     }
 
-    pub fn lines(&self) -> Vec<String> {
-        self.raw_input.lines().map(|s| s.to_string()).collect()
+    pub fn lines(&self) -> Map<std::str::Lines, fn(&str) -> String> {
+        self.raw_input.lines().map(|s| s.to_string())
     }
 
     pub fn convert_to_ints_by_line<S: std::str::FromStr>(&self) -> Vec<S> {
         self.lines()
-            .iter()
             .filter_map(|s| s.parse::<S>().ok())
             .collect()
     }

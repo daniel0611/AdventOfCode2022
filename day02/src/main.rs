@@ -89,7 +89,6 @@ fn calculate_score(strategy: (HandShape, HandShape)) -> usize {
 fn solve_a(input: &PuzzleInput) -> usize {
     let strategy: Vec<_> = input
         .lines()
-        .iter()
         .map(|line| {
             let shapes: Vec<_> = line
                 .split(' ')
@@ -108,7 +107,6 @@ fn solve_a(input: &PuzzleInput) -> usize {
 fn solve_b(input: &PuzzleInput) -> usize {
     let strategy: Vec<_> = input
         .lines()
-        .iter()
         .map(|line| {
             let shapes: Vec<_> = line.split(' ').collect();
             (

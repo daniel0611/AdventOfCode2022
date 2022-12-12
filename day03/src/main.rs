@@ -21,9 +21,9 @@ struct Rucksack {
 }
 
 impl Rucksack {
-    fn new(content: &str) -> Self {
+    fn new(content: String) -> Self {
         Self {
-            content: content.to_string(),
+            content: content,
         }
     }
 
@@ -72,7 +72,6 @@ impl ElvGroup {
 fn solve_a(input: &PuzzleInput) -> u32 {
     input
         .lines()
-        .iter()
         .map(|line| Rucksack::new(line))
         .map(|rucksack| rucksack.calculate_priority())
         .sum()
@@ -81,7 +80,6 @@ fn solve_a(input: &PuzzleInput) -> u32 {
 fn solve_b(input: &PuzzleInput) -> u32 {
     let rucksacks: Vec<_> = input
         .lines()
-        .iter()
         .map(|line| Rucksack::new(line))
         .collect();
 

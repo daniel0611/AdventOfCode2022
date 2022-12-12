@@ -35,8 +35,8 @@ struct Command {
     distance: usize,
 }
 
-impl From<&String> for Command {
-    fn from(s: &String) -> Self {
+impl From<String> for Command {
+    fn from(s: String) -> Self {
         let direction = Direction::from(s.chars().next().unwrap());
         let distance = s[1..].trim().parse().unwrap();
         Command {
@@ -60,7 +60,6 @@ impl GameState {
     fn parse(input: &PuzzleInput) -> Self {
         let commands = input
             .lines()
-            .iter()
             .map(Command::from)
             .collect();
 

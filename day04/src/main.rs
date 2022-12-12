@@ -12,7 +12,6 @@ fn main() {
 fn parse_input(input: &PuzzleInput) -> Vec<(RangeInclusive<usize>, RangeInclusive<usize>)>{
     input
     .lines()
-    .iter()
     .map(|line| {
         let mut ranges = line.split(',')
             .map(|range| {

@@ -43,17 +43,10 @@ impl Sensor {
     }
 }
 
-fn parse_sensors(input: &PuzzleInput) -> Vec<Sensor> {
-    input.lines().map(Sensor::parse).collect()
-}
 
-fn is_beacon_possible(x: i32, y: i32, sensors: &Vec<Sensor>) -> (bool, Option<&Sensor>) {
+fn is_beacon_possible(x: i32, y: i32, sensors: &[Sensor]) -> (bool, Option<&Sensor>) {
     for sensor in sensors.iter() {
-        // if sensor.closest_beacon.0 == x && sensor.closest_beacon.1 == y {
-        //     return false;
-        // }
-
-        let distance_beacon_to_sensor =sensor.distance_to_beacon; // sensor.position.distance(&sensor.closest_beacon);
+        let distance_beacon_to_sensor =sensor.distance_to_beacon;
         let distance_here_to_sensor = sensor.position.distance(&Coordinates(x, y));
 
         if distance_here_to_sensor <= distance_beacon_to_sensor {
@@ -65,7 +58,7 @@ fn is_beacon_possible(x: i32, y: i32, sensors: &Vec<Sensor>) -> (bool, Option<&S
 }
 
 fn solve_a(input: &PuzzleInput, y_value: i32) -> usize {
-    let sensors = parse_sensors(input);
+    let sensors: Vec<_> = input.lines().map(Sensor::parse).collect();
 
     let result: usize = (-y_value * 3..=y_value*3)
         .filter(|x| !is_beacon_possible(*x, y_value, &sensors).0)
@@ -76,7 +69,7 @@ fn solve_a(input: &PuzzleInput, y_value: i32) -> usize {
 }
 
 fn solve_b(input: &PuzzleInput, x_y_max: usize) -> usize {
-    let sensors = parse_sensors(input);
+    let sensors: Vec<_> = input.lines().map(Sensor::parse).collect();
 
     for y in 0..=x_y_max {
         let mut x = 0;

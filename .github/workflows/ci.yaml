@@ -20,6 +20,10 @@ jobs:
         dir: ${{fromJson(needs.crates.outputs.dir)}}
     steps:
       - uses: actions/checkout@v3
+      - name: Unlock input
+        uses: sliteteam/github-action-git-crypt-unlock@1.2.0
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
 
       - name: Cache Cargo crates.io index
         uses: actions/cache@v3
@@ -35,9 +39,3 @@ jobs:
 
       - name: Clippy
         run: cargo clippy -p ${{ matrix.dir }} -- -D warnings
-
-      - name: Run
-        # Only run actual solutions and not utlities like add-day
-        if: startsWith(matrix.dir, 'day')
-        run: cargo run -p ${{ matrix.dir }} --release
-      
